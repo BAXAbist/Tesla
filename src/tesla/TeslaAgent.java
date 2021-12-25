@@ -6,12 +6,14 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author tolik
+ * @author tolik and Ivan
  */
 public class TeslaAgent extends Agent{
 
@@ -43,7 +45,28 @@ public class TeslaAgent extends Agent{
     
     private class CheckControl extends CyclicBehaviour {
         
-        public void action() {
+        public void action(){
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+            ACLMessage msg = myAgent.receive(mt);
+            int control = Integer.parseInt(msg.getContent());
+            
+            switch (control){
+                case (3):{//поворот направо
+                };
+                break;
+                
+                case(2):{//поворот налево
+                };
+                break;
+                
+                case(1):{//остановка
+                };
+                break;
+                
+                case(4):{//начать движение
+                };
+                break;
+            }
             
         }
     }

@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import sun.misc.IOUtils;
 
 /**
  *
@@ -32,8 +31,18 @@ public class MapGUI extends JFrame {
     private final int sizeMapY = 20;
     private JLabel[][] mapLink = new JLabel[sizeMapY][sizeMapX];
     private int[][] mapTypeCell = new int[sizeMapY][sizeMapX];
-    private JLabel cur_loc;
     private final String res = "src/resources/";
+    
+//    private class Cell{
+//        public JLabel country;
+//        public int x,y; 
+//        public Offer(JLabel country, int x, int y){
+//            this.country = country;
+//            this.y = y;
+//            this.x = x;
+//        }
+//    }
+//}
     
     public MapGUI(TeslaAgent a) throws Exception{
         
