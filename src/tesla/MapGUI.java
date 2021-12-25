@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author tolik
+ * @author Ivan + Tolik = ♥
  */
 public class MapGUI extends JFrame {
     
@@ -32,17 +32,20 @@ public class MapGUI extends JFrame {
     private JLabel[][] mapLink = new JLabel[sizeMapY][sizeMapX];
     private int[][] mapTypeCell = new int[sizeMapY][sizeMapX];
     private final String res = "src/resources/";
+    private Cell cell;
     
-//    private class Cell{
-//        public JLabel country;
-//        public int x,y; 
-//        public Offer(JLabel country, int x, int y){
-//            this.country = country;
-//            this.y = y;
-//            this.x = x;
-//        }
-//    }
-//}
+    private class Cell{
+        public JLabel car;
+        public int x,y; 
+        public Cell(JLabel car, int x, int y){
+            this.car = car;
+            this.x = x;
+            this.y = y;
+            
+        }
+    }
+    
+
     
     public MapGUI(TeslaAgent a) throws Exception{
         
@@ -78,7 +81,12 @@ public class MapGUI extends JFrame {
         }
         reader.close();
         p.add(map,BorderLayout.CENTER);
-        getContentPane().add(p, BorderLayout.CENTER);
+        
+        JLabel car = new JLabel();
+        car.setIcon(new ImageIcon(res+"pix_car_right.png"));
+        cell = new Cell(car,1,1);
+        
+        getContentPane().add(p, BorderLayout.CENTER);     
         
     }
     
@@ -89,5 +97,52 @@ public class MapGUI extends JFrame {
         int centerY = (int)screenSize.getHeight() / 2;
         setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
          super.setVisible(true);
+     }
+     public void turn(int direction){
+         switch (direction){
+             case(0):{
+                 cell.car.setIcon(new ImageIcon(res+"pix_car_up.png"));
+             }
+             break;
+             
+             case(1):{
+                 cell.car.setIcon(new ImageIcon(res+"pix_car_right.png"));
+             }
+             break;
+             
+             case(2):{
+                 cell.car.setIcon(new ImageIcon(res+"pix_car_down.png"));
+             }
+             break;
+             
+             case(3):{
+                 cell.car.setIcon(new ImageIcon(res+"pix_car_left.png"));
+             }
+             break;
+             }
+            }
+     
+     public boolean isWall(int direction){
+        switch (direction){
+             case(0):{
+                 return mapTypeCell[cell.x][cell.y-1] !=0;
+             }             
+             case(1):{
+                 return mapTypeCell[cell.x+1][cell.y] !=0;
+             }
+             case(2):{
+                 return mapTypeCell[cell.x][cell.y+1] !=0;
+             }             
+             case(3):{
+                 return mapTypeCell[cell.x-1][cell.y] !=0;
+             }
+             } 
+        return true;
+     }
+     
+     public void movement(){
+     
+     }
+             
      }
 }

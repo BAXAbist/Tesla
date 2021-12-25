@@ -1,5 +1,6 @@
 package tesla;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
@@ -13,10 +14,13 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author tolik and Ivan
+ * @author Ivan + Tolik = ♥
  */
 public class TeslaAgent extends Agent{
-
+    
+    private final AID driver = new AID("driver", AID.ISLOCALNAME);
+    
+    
     protected void setup() {
         MapGUI gui;
         try {
@@ -44,18 +48,33 @@ public class TeslaAgent extends Agent{
     
     
     private class CheckControl extends CyclicBehaviour {
+        private int direction = 0;
         
         public void action(){
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
             ACLMessage msg = myAgent.receive(mt);
+            
             int control = Integer.parseInt(msg.getContent());
+            System.out.println(control);
             
             switch (control){
                 case (3):{//поворот направо
+                    if (direction == 3){
+                        direction = 0;
+                    } 
+                    else {
+                        direction++;
+                    }
                 };
                 break;
                 
                 case(2):{//поворот налево
+                    if (direction == 0){
+                        direction = 3;
+                    } 
+                    else {
+                        direction--;
+                    }
                 };
                 break;
                 
@@ -69,6 +88,8 @@ public class TeslaAgent extends Agent{
             }
             
         }
+        
+        
     }
     
 }
