@@ -6,6 +6,8 @@ import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,13 +19,14 @@ public class ElonMuskAgent extends Agent {
     private int oldMove;
     private final AID car = new AID("car", AID.ISLOCALNAME);
     private MessageTemplate mt;
+    private ControlGUI gui;
     
     /**
      *
      */
     @Override
     protected void setup() {
-        ControlGUI gui = new ControlGUI(this);
+        gui = new ControlGUI(this);
         gui.showGui();
         typeMove = 4;
         oldMove = typeMove;
@@ -55,17 +58,22 @@ public class ElonMuskAgent extends Agent {
                 typeMove = oldMove;
             
              mt = MessageTemplate.and(MessageTemplate 
-                    .MatchConversationId("wall"), MessageTemplate 
-                    .MatchInReplyTo(cfp.getReplyWith())); 
+                    .MatchConversationId("move"), MessageTemplate 
+                    .MatchInReplyTo(cfp.getReplyWith()));
+            try {
+                Thread.sleep(100);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
              ACLMessage reply = myAgent.receive(mt); 
                 if (reply != null) { 
-                    if (reply.getPerformative() == ACLMessage.PROPOSE) {
-                        
-                    }else{
+                    if (reply.getPerformative() == ACLMessage.REFUSE) {
                         typeMove = 4;
-                        stop();
+                        oldMove = typeMove;
+                        gui.stop();
                         System.out.println("блять, стена");
                     }
+
                 }
         }
     }

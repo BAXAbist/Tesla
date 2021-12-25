@@ -63,6 +63,7 @@ public class MapGUI extends JFrame {
             int[] curline = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray(); 
             for (int j = 0;j<sizeMapX;j++){
                 JLabel pix = new JLabel();
+                mapTypeCell[i][j] = curline[j];
                 switch(curline[j]){
                     case 0:
                         pix.setIcon(new ImageIcon(res+"pix_not_road.png"));
@@ -85,6 +86,7 @@ public class MapGUI extends JFrame {
         JLabel car = new JLabel();
         car.setIcon(new ImageIcon(res+"pix_car_right.png"));
         cell = new Cell(car,1,1);
+        mapLink[cell.y][cell.x].setIcon(cell.car.getIcon());
         
         getContentPane().add(p, BorderLayout.CENTER);     
         
@@ -120,21 +122,22 @@ public class MapGUI extends JFrame {
              }
              break;
              }
-            }
+         mapLink[cell.x][cell.y].setIcon(cell.car.getIcon());
+         }
      
      public boolean isWall(int direction){
         switch (direction){
              case(0):{
-                 return mapTypeCell[cell.x][cell.y-1] !=0;
+                 return mapTypeCell[cell.y-1][cell.x] !=0;
              }             
              case(1):{
-                 return mapTypeCell[cell.x+1][cell.y] !=0;
+                 return mapTypeCell[cell.y][cell.x+1] !=0;
              }
              case(2):{
-                 return mapTypeCell[cell.x][cell.y+1] !=0;
+                 return mapTypeCell[cell.y+1][cell.x] !=0;
              }             
              case(3):{
-                 return mapTypeCell[cell.x-1][cell.y] !=0;
+                 return mapTypeCell[cell.y][cell.x-1] !=0;
              }
              } 
         return true;

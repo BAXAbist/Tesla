@@ -48,7 +48,7 @@ public class TeslaAgent extends Agent{
     
     
     private class CheckControl extends CyclicBehaviour {
-        private int direction = 0;
+        private int direction = 1;
         
         public void action(){
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
@@ -59,13 +59,15 @@ public class TeslaAgent extends Agent{
                 System.out.println(control);
 
                 switch (control){
-                    case (3):{//поворот направо
+                    case (1):{//поворот направо
                         if (direction == 3){
-                            direction = 0;
+                            direction = 0;                           
                         } 
                         else {
                             direction++;
                         }
+                        gui.turn(direction);
+                        isGood(msg);
                     };
                     break;
 
@@ -76,14 +78,17 @@ public class TeslaAgent extends Agent{
                         else {
                             direction--;
                         }
+                        gui.turn(direction);
+                        isGood(msg);
                     };
                     break;
 
-                    case(1):{//остановка
+                    case(4):{//остановка
+                        isGood(msg);
                     };
                     break;
 
-                    case(4):{//начать движение
+                    case(3):{//начать движение
                         
                         boolean b = gui.isWall(direction);
                         checkWall(b,msg);
@@ -100,9 +105,16 @@ public class TeslaAgent extends Agent{
             }
             else{
                 reply.setPerformative(ACLMessage.REFUSE);
-                    reply.setContent("0");
+                reply.setContent("0");
             }
             myAgent.send(reply);
-    }
+        }
+        
+        public void isGood(ACLMessage msg){
+            ACLMessage reply = msg.createReply();
+            reply.setPerformative(ACLMessage.PROPOSE);
+            reply.setContent("1");
+             myAgent.send(reply);
+        }
     }
 }
