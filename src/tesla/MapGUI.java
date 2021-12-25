@@ -144,5 +144,4 @@ public class MapGUI extends JFrame {
      
      }
              
-     }
 }

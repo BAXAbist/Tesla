@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package tesla;
 
 import java.awt.BorderLayout;
@@ -55,12 +52,12 @@ public class ControlGUI extends JFrame {
         gas = new JLabel();
         gas.setText("Gas");
         gas.setFont(new Font(gas.getName(),Font.PLAIN,20));
-        gas.setForeground(Color.red);
         control.add(gas);
         
         brake = new JLabel();
         brake.setText("Brake");
         brake.setFont(new Font(gas.getName(),Font.PLAIN,20));
+        brake.setForeground(Color.red);
         control.add(brake);
         
         p.add(control,BorderLayout.SOUTH);

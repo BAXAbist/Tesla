@@ -14,18 +14,22 @@ import jade.lang.acl.ACLMessage;
 public class ElonMuskAgent extends Agent {
     
     private int typeMove;
+    private int oldMove;
     private final AID car = new AID("car", AID.ISLOCALNAME);
     
     protected void setup() {
         ControlGUI gui = new ControlGUI(this);
         gui.showGui();
         typeMove = 4;
+        oldMove = typeMove;
         
         addBehaviour(new SendMoveMes(this,1000));
     }
     
     public void updateMes(int typeMove){
-        this.typeMove =typeMove;
+        this.typeMove = typeMove;
+        if (typeMove == 3 || typeMove == 4)
+            oldMove = typeMove;
     }
     
     private class SendMoveMes extends TickerBehaviour{
@@ -41,7 +45,9 @@ public class ElonMuskAgent extends Agent {
             cfp.setContent(String.valueOf(typeMove)); 
             cfp.setConversationId("move"); 
             cfp.setReplyWith("cfp" + System.currentTimeMillis()); 
-            myAgent.send(cfp); 
+            myAgent.send(cfp);
+            if (typeMove == 1 || typeMove == 2)
+                typeMove = oldMove;
         }
     }
 }

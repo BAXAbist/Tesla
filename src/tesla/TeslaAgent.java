@@ -53,40 +53,40 @@ public class TeslaAgent extends Agent{
         public void action(){
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
             ACLMessage msg = myAgent.receive(mt);
-            
-            int control = Integer.parseInt(msg.getContent());
-            System.out.println(control);
-            
-            switch (control){
-                case (3):{//поворот направо
-                    if (direction == 3){
-                        direction = 0;
-                    } 
-                    else {
-                        direction++;
-                    }
-                };
-                break;
-                
-                case(2):{//поворот налево
-                    if (direction == 0){
-                        direction = 3;
-                    } 
-                    else {
-                        direction--;
-                    }
-                };
-                break;
-                
-                case(1):{//остановка
-                };
-                break;
-                
-                case(4):{//начать движение
-                };
-                break;
+            if (msg != null){
+                int control = Integer.parseInt(msg.getContent());
+                System.out.println(control);
+
+                switch (control){
+                    case (3):{//поворот направо
+                        if (direction == 3){
+                            direction = 0;
+                        } 
+                        else {
+                            direction++;
+                        }
+                    };
+                    break;
+
+                    case(2):{//поворот налево
+                        if (direction == 0){
+                            direction = 3;
+                        } 
+                        else {
+                            direction--;
+                        }
+                    };
+                    break;
+
+                    case(1):{//остановка
+                    };
+                    break;
+
+                    case(4):{//начать движение
+                    };
+                    break;
+                }
             }
-            
         }
         
         
