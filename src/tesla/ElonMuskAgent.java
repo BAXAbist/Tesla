@@ -3,9 +3,9 @@ package tesla;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 /**
  *
@@ -16,7 +16,12 @@ public class ElonMuskAgent extends Agent {
     private int typeMove;
     private int oldMove;
     private final AID car = new AID("car", AID.ISLOCALNAME);
+    private MessageTemplate mt;
     
+    /**
+     *
+     */
+    @Override
     protected void setup() {
         ControlGUI gui = new ControlGUI(this);
         gui.showGui();
@@ -48,6 +53,20 @@ public class ElonMuskAgent extends Agent {
             myAgent.send(cfp);
             if (typeMove == 1 || typeMove == 2)
                 typeMove = oldMove;
+            
+             mt = MessageTemplate.and(MessageTemplate 
+                    .MatchConversationId("wall"), MessageTemplate 
+                    .MatchInReplyTo(cfp.getReplyWith())); 
+             ACLMessage reply = myAgent.receive(mt); 
+                if (reply != null) { 
+                    if (reply.getPerformative() == ACLMessage.PROPOSE) {
+                        
+                    }else{
+                        typeMove = 4;
+                        stop();
+                        System.out.println("блять, стена");
+                    }
+                }
         }
     }
 }
