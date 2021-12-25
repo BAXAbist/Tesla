@@ -143,5 +143,4 @@ public class MapGUI extends JFrame {
      public void movement(){
      
      }
-             
-}
+}      

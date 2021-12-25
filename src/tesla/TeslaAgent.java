@@ -19,10 +19,10 @@ import java.util.logging.Logger;
 public class TeslaAgent extends Agent{
     
     private final AID driver = new AID("driver", AID.ISLOCALNAME);
-    
+    private MapGUI gui;
     
     protected void setup() {
-        MapGUI gui;
+        
         try {
             gui = new MapGUI(this);
             gui.showGui();
@@ -53,6 +53,7 @@ public class TeslaAgent extends Agent{
         public void action(){
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
             ACLMessage msg = myAgent.receive(mt);
+
             if (msg != null){
                 int control = Integer.parseInt(msg.getContent());
                 System.out.println(control);
@@ -83,13 +84,25 @@ public class TeslaAgent extends Agent{
                     break;
 
                     case(4):{//начать движение
+                        
+                        boolean b = gui.isWall(direction);
+                        checkWall(b,msg);
                     };
                     break;
                 }
-            }
+            }        
         }
-        
-        
+        public void checkWall(boolean isWall, ACLMessage msg){
+            ACLMessage reply = msg.createReply();
+            if (isWall){
+                reply.setPerformative(ACLMessage.PROPOSE);
+                reply.setContent("1");
+            }
+            else{
+                reply.setPerformative(ACLMessage.REFUSE);
+                    reply.setContent("0");
+            }
+            myAgent.send(reply);
     }
-    
+    }
 }
