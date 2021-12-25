@@ -107,7 +107,10 @@ public class ControlGUI extends JFrame {
         
     }
     
-    
+    public void stop(){
+        gas.setForeground(Color.black);
+        brake.setForeground(Color.red);
+    }
     
     public void showGui() {
          pack();
