@@ -94,11 +94,12 @@ public class ControlGUI extends JFrame {
                         brake.setForeground(Color.red);
                         a.updateMes(4);
                         break;
-                    case(KeyEvent.VK_ALT):
+                    case(KeyEvent.VK_CONTROL):
                         gas.setForeground(Color.black);
                         brake.setForeground(Color.red);
                         a.updateMes(5);
                         break;
+                        
                 }
             }
             

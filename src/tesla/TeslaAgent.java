@@ -58,8 +58,9 @@ public class TeslaAgent extends Agent{
 
             if (msg != null){
                 int control = Integer.parseInt(msg.getContent());
-                System.out.println(control);
-
+                //System.out.println(control);
+                if (cnt_fuel == 0) 
+                    control = 4;
                 switch (control){
                     case (1):{//поворот направо
                         if (direction == 3){
@@ -104,10 +105,21 @@ public class TeslaAgent extends Agent{
                     break;
                     
                     case(5):{
-                        if (cnt_fuel < 50)
-                            cnt_fuel += 50;
+                        
+                        if (gui.checkGas()){
+                            if (cnt_fuel == 100)
+                                System.out.println("ты чё, краёв не видишь, бак уже полный");
+                            else {
+                                if (cnt_fuel < 50)
+                                    cnt_fuel += 50;
+                                else
+                                    cnt_fuel = 100;
+                                System.out.println("всё, заправились, можно и дальше хасанить");
+                            }
+                       }
                         else
-                            cnt_fuel = 100;
+                            System.out.println("ишь ты чего захотел, а нет тут заправки");
+                         
                     }
                 }
             }        

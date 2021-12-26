@@ -56,7 +56,7 @@ public class ElonMuskAgent extends Agent {
             cfp.setConversationId("move"); 
             cfp.setReplyWith("cfp" + System.currentTimeMillis()); 
             myAgent.send(cfp);
-            if (typeMove == 1 || typeMove == 2)
+            if (typeMove == 1 || typeMove == 2 || typeMove == 5)
                 typeMove = oldMove;
             
              mt = MessageTemplate.and(MessageTemplate 
@@ -76,7 +76,6 @@ public class ElonMuskAgent extends Agent {
                     System.out.println("блять, стена");
                 }
                 int cnt_fuel = Integer.parseInt(reply.getContent());
-                System.out.println(cnt_fuel);
                 gui.fuel(cnt_fuel);
             }
         }

@@ -194,4 +194,7 @@ public class MapGUI extends JFrame {
             }
         } 
     }
+    public boolean checkGas(){
+        return mapTypeCell[cell.y][cell.x] == 2;
+    }
 }      
