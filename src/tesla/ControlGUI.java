@@ -127,8 +127,8 @@ public class ControlGUI extends JFrame {
         brake.setForeground(Color.red);
     }
     
-    public void fuel(){
-        
+    public void fuel(int cnt_fuel){
+        fuel.setValue(cnt_fuel);
     }
     
     public void showGui() {

@@ -21,7 +21,6 @@ public class TeslaAgent extends Agent{
     private final AID driver = new AID("driver", AID.ISLOCALNAME);
     private MapGUI gui;
     private int cnt_fuel = 100;
-    private int fuel_cons_stop = 1;
     private int fuel_cons_move = 2;
     
     protected void setup() {
@@ -90,7 +89,6 @@ public class TeslaAgent extends Agent{
 
                     case(4):{//остановка
                         isGood(msg);
-                        cnt_fuel -= fuel_cons_stop;
                     };
                     break;
 
@@ -101,9 +99,6 @@ public class TeslaAgent extends Agent{
                         if(b){
                             gui.move(direction);
                             cnt_fuel -= fuel_cons_move;
-                        }
-                        else{
-                            cnt_fuel -= fuel_cons_stop;
                         }
                     };
                     break;

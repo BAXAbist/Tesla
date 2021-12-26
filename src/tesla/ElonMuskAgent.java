@@ -76,7 +76,8 @@ public class ElonMuskAgent extends Agent {
                     System.out.println("блять, стена");
                 }
                 int cnt_fuel = Integer.parseInt(reply.getContent());
-                gui.fuel();
+                System.out.println(cnt_fuel);
+                gui.fuel(cnt_fuel);
             }
         }
     }
