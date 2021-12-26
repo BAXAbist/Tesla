@@ -107,6 +107,13 @@ public class TeslaAgent extends Agent{
                         }
                     };
                     break;
+                    
+                    case(5):{
+                        if (cnt_fuel < 50)
+                            cnt_fuel += 50;
+                        else
+                            cnt_fuel = 100;
+                    }
                 }
             }        
         }
