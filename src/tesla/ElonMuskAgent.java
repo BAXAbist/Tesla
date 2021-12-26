@@ -38,6 +38,8 @@ public class ElonMuskAgent extends Agent {
         this.typeMove = typeMove;
         if (typeMove == 3 || typeMove == 4)
             oldMove = typeMove;
+        if (typeMove == 5)
+            oldMove = 4;
     }
     
     private class SendMoveMes extends TickerBehaviour{
@@ -66,15 +68,16 @@ public class ElonMuskAgent extends Agent {
                 System.out.println(ex);
             }
              ACLMessage reply = myAgent.receive(mt); 
-                if (reply != null) { 
-                    if (reply.getPerformative() == ACLMessage.REFUSE) {
-                        typeMove = 4;
-                        oldMove = typeMove;
-                        gui.stop();
-                        System.out.println("блять, стена");
-                    }
-
+            if (reply != null) { 
+                if (reply.getPerformative() == ACLMessage.REFUSE) {
+                    typeMove = 4;
+                    oldMove = typeMove;
+                    gui.stop();
+                    System.out.println("блять, стена");
                 }
+                int cnt_fuel = Integer.parseInt(reply.getContent());
+                gui.fuel();
+            }
         }
     }
 }

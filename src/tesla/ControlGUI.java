@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -24,6 +25,7 @@ public class ControlGUI extends JFrame {
     private JLabel right;
     private JLabel gas;
     private JLabel brake;
+    private JProgressBar fuel;
     private final String res = "src/resources/";
     private ElonMuskAgent myAgent;
 
@@ -44,7 +46,7 @@ public class ControlGUI extends JFrame {
         
         right = new JLabel();
         right.setIcon(new ImageIcon(res + "red_r.png"));
-        p.add(right,BorderLayout.EAST);
+        p.add(right,BorderLayout.CENTER);
         
         JPanel control = new JPanel();
         control.setLayout(new GridLayout(1,2));
@@ -59,8 +61,16 @@ public class ControlGUI extends JFrame {
         brake.setFont(new Font(gas.getName(),Font.PLAIN,20));
         brake.setForeground(Color.red);
         control.add(brake);
-        
         p.add(control,BorderLayout.SOUTH);
+
+        fuel = new JProgressBar(JProgressBar.VERTICAL);
+        fuel.setStringPainted(true);
+        fuel.setMinimum(0);
+        fuel.setMaximum(100);
+        //fuel.setLayout(new GridLayout(0 , 4,10,10));
+        fuel.setValue(100);
+
+        p.add(fuel,BorderLayout.EAST);
         
         p.addKeyListener(new KeyListener(){
             @Override
@@ -83,6 +93,11 @@ public class ControlGUI extends JFrame {
                         gas.setForeground(Color.black);
                         brake.setForeground(Color.red);
                         a.updateMes(4);
+                        break;
+                    case(KeyEvent.VK_ALT):
+                        gas.setForeground(Color.black);
+                        brake.setForeground(Color.red);
+                        a.updateMes(5);
                         break;
                 }
             }
@@ -110,6 +125,10 @@ public class ControlGUI extends JFrame {
     public void stop(){
         gas.setForeground(Color.black);
         brake.setForeground(Color.red);
+    }
+    
+    public void fuel(){
+        
     }
     
     public void showGui() {
