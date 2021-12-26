@@ -33,6 +33,8 @@ public class MapGUI extends JFrame {
     private int[][] mapTypeCell = new int[sizeMapY][sizeMapX];
     private final String res = "src/resources/";
     private Cell cell;
+    private final String[] gasCarIcon = {"pix_car_up_gas.png","pix_car_right_gas.png","pix_car_down_gas.png","pix_car_left_gas.png"};
+    private final String[] roadCarIcon = {"pix_car_up.png","pix_car_right.png","pix_car_down.png","pix_car_left.png"};
     
     private class Cell{
         public JLabel car;
@@ -155,29 +157,41 @@ public class MapGUI extends JFrame {
          }
          switch (direction){
              case(0):{
-                // if(is_gas)
+                if(mapTypeCell[cell.y-1][cell.x] == 2)
+                    cell.car.setIcon(new ImageIcon(res+gasCarIcon[0]));
+                else
+                    cell.car.setIcon(new ImageIcon(res+roadCarIcon[0]));
                  mapLink[cell.y-1][cell.x].setIcon(cell.car.getIcon());
                  cell.y--;
                  break;
              }             
              case(1):{
-                // if(is_gas)
-                 mapLink[cell.y][cell.x+1].setIcon(cell.car.getIcon());
-                 cell.x++;
-                 break;
-             }
+                if(mapTypeCell[cell.y][cell.x+1] == 2)
+                    cell.car.setIcon(new ImageIcon(res+gasCarIcon[1]));
+                else
+                    cell.car.setIcon(new ImageIcon(res+roadCarIcon[1]));
+                mapLink[cell.y][cell.x+1].setIcon(cell.car.getIcon());
+                cell.x++;
+                break;
+            }
              case(2):{
-                // if(is_gas)
-                 mapLink[cell.y+1][cell.x].setIcon(cell.car.getIcon());
-                 cell.y++;
-                 break;
-             }             
+                if(mapTypeCell[cell.y+1][cell.x] == 2)
+                    cell.car.setIcon(new ImageIcon(res+gasCarIcon[2]));
+                else
+                    cell.car.setIcon(new ImageIcon(res+roadCarIcon[2]));
+                mapLink[cell.y+1][cell.x].setIcon(cell.car.getIcon());
+                cell.y++;
+                break;
+            }             
              case(3):{
-                // if(is_gas)
-                 mapLink[cell.y][cell.x-1].setIcon(cell.car.getIcon());
-                 cell.x--;
-                 break;
-             }
+                if(mapTypeCell[cell.y][cell.x-1] == 2)
+                    cell.car.setIcon(new ImageIcon(res+gasCarIcon[3]));
+                else
+                    cell.car.setIcon(new ImageIcon(res+roadCarIcon[3]));
+                mapLink[cell.y][cell.x-1].setIcon(cell.car.getIcon());
+                cell.x--;
+                break;
+            }
         } 
-     }
+    }
 }      

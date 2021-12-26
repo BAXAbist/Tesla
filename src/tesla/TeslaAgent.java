@@ -20,6 +20,9 @@ public class TeslaAgent extends Agent{
     
     private final AID driver = new AID("driver", AID.ISLOCALNAME);
     private MapGUI gui;
+    private int cnt_fuel = 100;
+    private int fuel_cons_stop = 1;
+    private int fuel_cons_move = 2;
     
     protected void setup() {
         
@@ -68,6 +71,7 @@ public class TeslaAgent extends Agent{
                         }
                         gui.turn(direction);
                         isGood(msg);
+                        cnt_fuel -= fuel_cons_move;
                     };
                     break;
 
@@ -80,11 +84,13 @@ public class TeslaAgent extends Agent{
                         }
                         gui.turn(direction);
                         isGood(msg);
+                        cnt_fuel -= fuel_cons_move;
                     };
                     break;
 
                     case(4):{//остановка
                         isGood(msg);
+                        cnt_fuel -= fuel_cons_stop;
                     };
                     break;
 
@@ -92,8 +98,13 @@ public class TeslaAgent extends Agent{
                         
                         boolean b = gui.isWall(direction);
                         checkWall(b,msg);
-                        if(b)
+                        if(b){
                             gui.move(direction);
+                            cnt_fuel -= fuel_cons_move;
+                        }
+                        else{
+                            cnt_fuel -= fuel_cons_stop;
+                        }
                     };
                     break;
                 }
@@ -103,11 +114,11 @@ public class TeslaAgent extends Agent{
             ACLMessage reply = msg.createReply();
             if (isWall){
                 reply.setPerformative(ACLMessage.PROPOSE);
-                reply.setContent("1");
+                reply.setContent(String.valueOf(cnt_fuel));
             }
             else{
                 reply.setPerformative(ACLMessage.REFUSE);
-                reply.setContent("0");
+                reply.setContent(String.valueOf(cnt_fuel));
             }
             myAgent.send(reply);
         }
@@ -115,7 +126,7 @@ public class TeslaAgent extends Agent{
         public void isGood(ACLMessage msg){
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.PROPOSE);
-            reply.setContent("1");
+            reply.setContent(String.valueOf(cnt_fuel));
              myAgent.send(reply);
         }
     }
