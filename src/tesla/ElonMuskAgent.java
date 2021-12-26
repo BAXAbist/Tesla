@@ -20,6 +20,7 @@ public class ElonMuskAgent extends Agent {
     private final AID car = new AID("car", AID.ISLOCALNAME);
     private MessageTemplate mt;
     private ControlGUI gui;
+    private boolean checkWait = false;
     
     /**
      *
@@ -40,6 +41,8 @@ public class ElonMuskAgent extends Agent {
             oldMove = typeMove;
         if (typeMove == 5)
             oldMove = 4;
+        if (typeMove == 6)
+            checkWait = !checkWait;
     }
     
     private class SendMoveMes extends TickerBehaviour{
@@ -50,38 +53,40 @@ public class ElonMuskAgent extends Agent {
         
         @Override
         protected void onTick() {
-            ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-            cfp.addReceiver(car);
-            cfp.setContent(String.valueOf(typeMove)); 
-            cfp.setConversationId("move"); 
-            cfp.setReplyWith("cfp" + System.currentTimeMillis()); 
-            myAgent.send(cfp);
-            if (typeMove == 1 || typeMove == 2 || typeMove == 5)
-                typeMove = oldMove;
-            
-             mt = MessageTemplate.and(MessageTemplate 
-                    .MatchConversationId("move"), MessageTemplate 
-                    .MatchInReplyTo(cfp.getReplyWith()));
-            try {
-                Thread.sleep(100);
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-             ACLMessage reply = myAgent.receive(mt); 
-            if (reply != null) { 
-                if (reply.getPerformative() == ACLMessage.REFUSE) {
-                    typeMove = 4;
-                    oldMove = typeMove;
-                    gui.stop();
-                    System.out.println("б**ть, стена");
+            if (checkWait){
+                ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+                cfp.addReceiver(car);
+                cfp.setContent(String.valueOf(typeMove)); 
+                cfp.setConversationId("move"); 
+                cfp.setReplyWith("cfp" + System.currentTimeMillis()); 
+                myAgent.send(cfp);
+                if (typeMove == 1 || typeMove == 2 || typeMove == 5)
+                    typeMove = oldMove;
+
+                 mt = MessageTemplate.and(MessageTemplate 
+                        .MatchConversationId("move"), MessageTemplate 
+                        .MatchInReplyTo(cfp.getReplyWith()));
+                try {
+                    Thread.sleep(100);
+                } catch (Exception ex) {
+                    System.out.println(ex);
                 }
-                int cnt_fuel = Integer.parseInt(reply.getContent());
-                if(cnt_fuel == 0){
-                    gui.stop();
-                    typeMove = 4;
-                    oldMove = typeMove;
+                 ACLMessage reply = myAgent.receive(mt); 
+                if (reply != null) { 
+                    if (reply.getPerformative() == ACLMessage.REFUSE) {
+                        typeMove = 4;
+                        oldMove = typeMove;
+                        gui.stop();
+                        System.out.println("б**ть, стена");
+                    }
+                    int cnt_fuel = Integer.parseInt(reply.getContent());
+                    if(cnt_fuel == 0){
+                        gui.stop();
+                        typeMove = 4;
+                        oldMove = typeMove;
+                    }
+                    gui.fuel(cnt_fuel);
                 }
-                gui.fuel(cnt_fuel);
             }
         }
     }
