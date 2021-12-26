@@ -22,6 +22,7 @@ public class TeslaAgent extends Agent{
     private MapGUI gui;
     private int cnt_fuel = 100;
     private int fuel_cons_move = 2;
+    private int flag = 1;
     
     protected void setup() {
         
@@ -59,8 +60,13 @@ public class TeslaAgent extends Agent{
             if (msg != null){
                 int control = Integer.parseInt(msg.getContent());
                 //System.out.println(control);
-                if (cnt_fuel == 0) 
+                if (cnt_fuel == 0){ 
                     control = 4;
+                    if (flag == 1){
+                        flag =0;
+                        System.out.println("Ну штош, приехали, дальше только ножками");
+                    }
+                }
                 switch (control){
                     case (1):{//поворот направо
                         if (direction == 3){
