@@ -31,7 +31,7 @@ public class ElonMuskAgent extends Agent {
         typeMove = 4;
         oldMove = typeMove;
         
-        addBehaviour(new SendMoveMes(this,1000));
+        addBehaviour(new SendMoveMes(this,500));
     }
     
     public void updateMes(int typeMove){

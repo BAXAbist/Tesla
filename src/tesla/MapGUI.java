@@ -122,7 +122,7 @@ public class MapGUI extends JFrame {
              }
              break;
              }
-         mapLink[cell.x][cell.y].setIcon(cell.car.getIcon());
+         mapLink[cell.y][cell.x].setIcon(cell.car.getIcon());
          }
      
      public boolean isWall(int direction){
@@ -143,7 +143,41 @@ public class MapGUI extends JFrame {
         return true;
      }
      
-     public void movement(){
-     
+     public void move(int direction){
+         int type_road = mapTypeCell[cell.y][cell.x];
+         switch(type_road){
+             case 1:
+                 mapLink[cell.y][cell.x].setIcon(new ImageIcon(res+"pix_road.png"));
+                 break;
+             case 2:
+                 mapLink[cell.y][cell.x].setIcon(new ImageIcon(res+"pix_gas.png"));
+                 break;
+         }
+         switch (direction){
+             case(0):{
+                // if(is_gas)
+                 mapLink[cell.y-1][cell.x].setIcon(cell.car.getIcon());
+                 cell.y--;
+                 break;
+             }             
+             case(1):{
+                // if(is_gas)
+                 mapLink[cell.y][cell.x+1].setIcon(cell.car.getIcon());
+                 cell.x++;
+                 break;
+             }
+             case(2):{
+                // if(is_gas)
+                 mapLink[cell.y+1][cell.x].setIcon(cell.car.getIcon());
+                 cell.y++;
+                 break;
+             }             
+             case(3):{
+                // if(is_gas)
+                 mapLink[cell.y][cell.x-1].setIcon(cell.car.getIcon());
+                 cell.x--;
+                 break;
+             }
+        } 
      }
 }      

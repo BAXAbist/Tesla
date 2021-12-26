@@ -92,6 +92,8 @@ public class TeslaAgent extends Agent{
                         
                         boolean b = gui.isWall(direction);
                         checkWall(b,msg);
+                        if(b)
+                            gui.move(direction);
                     };
                     break;
                 }
