@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Ivan + Tolik = ♥
+ * @author Ivan
  */
 public class TeslaAgent extends Agent{
     

@@ -77,7 +77,7 @@ public class ElonMuskAgent extends Agent {
                         typeMove = 4;
                         oldMove = typeMove;
                         gui.stop();
-                        System.out.println("б**ть, стена");
+                        System.out.println("чорт, стена");
                     }
                     int cnt_fuel = Integer.parseInt(reply.getContent());
                     if(cnt_fuel == 0){
